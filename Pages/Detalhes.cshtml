@@ -1,0 +1,53 @@
+﻿@page "/produto/{slug}/{id}"
+@model HappyFeetAppWeb.Pages.DetalhesModel
+
+
+
+<h2 class="my-3">@Model.Produto.ProdutoTitulo</h2>
+<div class="row">
+    <div class="col-4">
+        <img class="img-fluid rounded" src="@Model.Produto.ImagemUri">
+    </div>
+    <div class="col-6">
+        <h4 class="my-3">Sobre:</h4>
+        <p>@Model.Produto.ProdutoDescricao</p>
+        <h4 class="my-3">Mais Info:</h4>
+        <ul>
+            <li>
+                <label asp-for="Produto.Preco"></label>:
+                 @Html.DisplayFor(model => model.Produto.Preco)
+            </li>
+            <li>
+                <label asp-for="Produto.TamanhosDisponiveis"></label>:
+                @{
+                    var tamanhos = Model.Produto.TamanhosDisponiveis.Split(',');
+                }
+
+                <div>
+                    @foreach (var tamanho in tamanhos)
+                    {
+                        <button type="button" class="btn btn-outline-primary btn-sm">@tamanho</button>
+                    }
+                </div>
+            </li>
+            @if (Model.DescricaoCategoria is not null)
+            {
+                <li>
+                    <label asp-for="Produto.CategoriaId"></label>:
+                    @Html.DisplayFor(model => model.DescricaoCategoria)
+                </li>
+            }
+            <li>
+                <label asp-for="Produto.ProdutoEmEstoque"></label>:
+                @Html.DisplayFor(model => model.Produto.ProdutoEmEstoqueFormatado)
+            </li>
+            <li>
+                <label asp-for="Produto.DataDeEnvio"></label>: 
+                @Html.DisplayFor(model => model.Produto.DataDeEnvio)
+            </li>
+        </ul>
+        <a class="btn my-3 btn-primary" 
+        asp-page="/Editar" asp-route-id="@Model.Produto.ProdutoId">Editar</a>
+    </div>
+</div>
+

@@ -1,0 +1,34 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="row justify-content-md-center">
+
+   @* @if (TempData["TempMensagemSucesso"] != null)
+    {
+        <div class="alert alert-success mt-5"
+             role="alert" style="width: 80%">
+            <h4 class="alert-heading">Sucesso!</h4>
+            Operação realizada com sucesso!
+        </div>
+    }*@
+
+
+    @foreach (var item in Model.ListaProduto)
+    {
+        <div class="card col-3 m-3">
+            <img src="@item.ImagemUri" class="p-3" style="border-radius: 25px">
+            <div class="card-body">
+                <h5 class="card-title">@item.ProdutoTitulo</h5>
+                <p class="card-text">@item.Preco.ToString("C")</p>
+                <a class="btn btn-primary"
+                   asp-page="Detalhes"
+                   asp-route-slug="@item.ProdutoTituloSlug"
+                   asp-route-id="@item.ProdutoId">Ver mais</a>
+            </div>
+        </div>
+    }
+</div>
