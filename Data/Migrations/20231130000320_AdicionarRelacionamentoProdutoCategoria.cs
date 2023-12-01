@@ -10,10 +10,10 @@ namespace HappyFeetAppWeb.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "Id",
-                table: "Categoria",
-                newName: "CategoriaId");
+            //migrationBuilder.RenameColumn(
+            //    name: "Id",
+            //    table: "Categoria",
+            //    newName: "CategoriaId");
 
             migrationBuilder.AddColumn<int>(
                 name: "CategoriaId",
