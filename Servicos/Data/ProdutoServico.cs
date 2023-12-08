@@ -1,5 +1,6 @@
 ﻿using HappyFeetAppWeb.Data;
 using HappyFeetAppWeb.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 
 namespace HappyFeetAppWeb.Servicos.Data;
@@ -21,6 +22,7 @@ public class ProdutoServico : IProdutoServico
         produtoEncontrado.TamanhosDisponiveis = produto.TamanhosDisponiveis;
         produtoEncontrado.DataDeEnvio = produto.DataDeEnvio;
         produtoEncontrado.CategoriaId = produto.CategoriaId;
+        produtoEncontrado.Generos = produto.Generos;
         _context.SaveChanges();
     }
 
@@ -39,7 +41,7 @@ public class ProdutoServico : IProdutoServico
 
     public Produto Obter(int id)
     {
-        return _context.Produto.SingleOrDefault(item => item.ProdutoId == id);
+        return _context.Produto.Include(item => item.Generos).SingleOrDefault(item => item.ProdutoId == id);
     }
 
     public IList<Produto> ObterTodos()
@@ -52,4 +54,7 @@ public class ProdutoServico : IProdutoServico
 
     public Categoria ObterCategoria(int id)
         => _context.Categoria.SingleOrDefault(item => item.CategoriaId == id);
+
+    public IList<Genero> ObterTodosGeneros()
+        => _context.Genero.ToList();
 }

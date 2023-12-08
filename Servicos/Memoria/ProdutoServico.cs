@@ -145,6 +145,11 @@ public class ProdutoServico : IProdutoServico
     {
         throw new NotImplementedException();
     }
+
+    public IList<Genero> ObterTodosGeneros()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 

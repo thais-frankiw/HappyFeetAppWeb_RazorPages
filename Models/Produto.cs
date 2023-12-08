@@ -43,4 +43,6 @@ public class Produto
     [Display(Name = "Categoria")]
     public int? CategoriaId { get; set; }
 
+    public ICollection<Genero>? Generos { get; set; }
+
 }

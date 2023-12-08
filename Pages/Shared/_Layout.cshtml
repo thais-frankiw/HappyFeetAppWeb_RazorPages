@@ -24,14 +24,22 @@
                         <li class="nav-item">
                             <a class="nav-link active" asp-page="/Privacidade">Privacidade</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-page="/Criar">Inclusão</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-page="/Criar">Inclusão</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-page="/Categorias/Index">Categoria</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-page="/Generos/Index">Genero</a>
+                            </li>
+                        }
+
+                      
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-sm-2" type="search" placeholder="Search">
-                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                    </form>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
@@ -53,5 +61,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
 </body>
 </html>

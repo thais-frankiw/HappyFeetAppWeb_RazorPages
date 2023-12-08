@@ -2,13 +2,41 @@ using HappyFeetAppWeb.Data;
 using HappyFeetAppWeb.Servicos;
 using HappyFeetAppWeb.Servicos.Data;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options => {
+                                            options.Conventions.AuthorizeFolder("/Categorias");
+                                            options.Conventions.AuthorizeFolder("/Generos");
+                                           })
+                                           .AddNToastNotifyToastr(new ToastrOptions()
+                                           {
+                                                ProgressBar = false,
+                                                PositionClass = ToastPositions.BottomLeft
+                                           });
+
 builder.Services.AddTransient<IProdutoServico, ProdutoServico>();
+
 builder.Services.AddDbContext<HappyFeetDBContext>();
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<HappyFeetDBContext>();
+
+builder.Services.Configure<IdentityOptions>(options => {
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 3;
+    // Lockout settings
+    options.Lockout.MaxFailedAccessAttempts = 30;
+    options.Lockout.AllowedForNewUsers = true;
+    // User settings
+    options.User.RequireUniqueEmail = true;
+});
 
 var app = builder.Build();
 
@@ -28,7 +56,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-//app.UseAuthorization();
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+app.UseNToastNotify();
 
 app.MapRazorPages();
 

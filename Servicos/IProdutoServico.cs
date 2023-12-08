@@ -12,4 +12,5 @@ public interface IProdutoServico
 
     IList<Categoria> ObterTodasCategorias();
     Categoria ObterCategoria(int id);
+    IList<Genero> ObterTodosGeneros();
 }

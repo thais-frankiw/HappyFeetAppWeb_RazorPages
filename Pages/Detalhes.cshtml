@@ -37,6 +37,14 @@
                     @Html.DisplayFor(model => model.DescricaoCategoria)
                 </li>
             }
+            @if (Model.Produto.Generos.Any())
+            {
+                <li>
+                    <label asp-for="Produto.Generos"></label>:
+                    @string.Join(", ",Model.Produto.Generos.Select(item => item.GeneroNome))
+                </li>
+            }
+
             <li>
                 <label asp-for="Produto.ProdutoEmEstoque"></label>:
                 @Html.DisplayFor(model => model.Produto.ProdutoEmEstoqueFormatado)
@@ -46,8 +54,11 @@
                 @Html.DisplayFor(model => model.Produto.DataDeEnvio)
             </li>
         </ul>
-        <a class="btn my-3 btn-primary" 
-        asp-page="/Editar" asp-route-id="@Model.Produto.ProdutoId">Editar</a>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a class="btn my-3 btn-primary"
+            asp-page="/Editar" asp-route-id="@Model.Produto.ProdutoId">Editar</a>
+        }  
     </div>
 </div>
 
